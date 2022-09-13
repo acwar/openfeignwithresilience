@@ -1,0 +1,39 @@
+resilience4j:
+  timeLimiter:
+    configs:
+      default:
+        timeoutDuration: 30s
+  circuit-breaker:
+    configs:
+      default:
+        minimum-number-of-calls: 5
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        ignoreExceptions:
+          - org.aag.testing.feigncircuittest.IgnorableException
+  threadPoolBulkhead:
+    configs:
+      default:
+        maxThreadPoolSize: 3
+        coreThreadPoolSize: 3
+        queueCapacity: 1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  port: 8081
+
+feign:
+  circuit-breaker:
+    enabled: true
+    group:
+      enabled: true
+
+
+spring:
+  main:
+    allow-circular-references: true
